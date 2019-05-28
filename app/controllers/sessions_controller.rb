@@ -7,7 +7,7 @@ class SessionsController < ApplicationController
   # POST /sessions
   def create 
     @user = User.find_by(email: params[:email])
-    if user && user.authenticate(params[:password]) && user.session.exists?
+    if user && user.authenticate(params[:password]) && !user.session.exists?
       @session = Session.new()
       @session.token = ActiveSupport::Base64.encode64(@user.name)
       @session.user_id = @user.id
